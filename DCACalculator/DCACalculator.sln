@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DCACalculator", "DCACalculator.csproj", "{2BB234D4-4A17-41B7-9D2D-24E80142D80F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCACalculator.Data", "..\DCACalculator.Data\DCACalculator.Data.csproj", "{913E1E9F-063F-48FD-807F-882BD57914C6}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DCACalculator.DB", "..\DCACalculator.Sql\DCACalculator.DB.sqlproj", "{6E86DC05-939C-47C4-B3CA-2ACAFF5A8CF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BB234D4-4A17-41B7-9D2D-24E80142D80F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BB234D4-4A17-41B7-9D2D-24E80142D80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BB234D4-4A17-41B7-9D2D-24E80142D80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BB234D4-4A17-41B7-9D2D-24E80142D80F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{913E1E9F-063F-48FD-807F-882BD57914C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{913E1E9F-063F-48FD-807F-882BD57914C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{913E1E9F-063F-48FD-807F-882BD57914C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{913E1E9F-063F-48FD-807F-882BD57914C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E86DC05-939C-47C4-B3CA-2ACAFF5A8CF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E86DC05-939C-47C4-B3CA-2ACAFF5A8CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E86DC05-939C-47C4-B3CA-2ACAFF5A8CF7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6E86DC05-939C-47C4-B3CA-2ACAFF5A8CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E86DC05-939C-47C4-B3CA-2ACAFF5A8CF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E86DC05-939C-47C4-B3CA-2ACAFF5A8CF7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {921B594C-CF10-4323-976A-A51AB3A906B4}
+	EndGlobalSection
+EndGlobal

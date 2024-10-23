@@ -1,0 +1,45 @@
+﻿@page "/investments"
+@inject CoinMarketCap CoinMarketCap;
+@inject IInvestmentRepository investmentRepository;
+
+<PageTitle>Investments</PageTitle>
+
+<MudText Typo="Typo.h3">Investments</MudText>
+
+<MudDataGrid Items="@investments" T="InvestmentRowViewModel" 
+    Hover="true" Bordered="true" Dense="true"
+    SortMode="SortMode.Multiple" Hideable="true" ShowMenuIcon="true" ColumnsPanelReordering="true"
+    Filterable="true" FilterMode="@DataGridFilterMode.ColumnFilterRow" FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive">
+    <Columns>
+        <PropertyColumn Property="x => x.Id" Hidden="true" />
+        <PropertyColumn Property="x => x.Date" Format="dd/MM/yyyy HH:mm:ss" />
+        <PropertyColumn Property="x => x.InvestmentAmount" Title="Investment Amount" Format="0.00" />
+        <PropertyColumn Property="x => x.CryptoCurrencyName" Title="Crypto Currency Name" />
+        <PropertyColumn Property="x => x.CryptoCurrencyAmount" Title="Crypto Currency Amount" Format="0.00000" />
+        <PropertyColumn Property="x => x.ValueToday" Title="Value Today" Format="0.00" />
+        <PropertyColumn Property="x => x.ROI" Format="0.00" />
+    </Columns>
+</MudDataGrid>
+
+@code {
+    public List<InvestmentRowViewModel> investments = new List<InvestmentRowViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var resultCoinMarketCap = CoinMarketCap.GetCryptoPrices();
+        var prices = JsonSerializer.Deserialize<Object>(resultCoinMarketCap);
+        var result = investmentRepository.GetInvestments();
+        investments = result.Select(x => new InvestmentRowViewModel()
+            {
+                Id = x.Id,
+                Date = x.Date,
+                InvestmentAmount = x.InvestmentAmount,
+                CryptoCurrencyName = x.CryptoCurrencyName,
+                CryptoCurrencyAmount = x.CryptoCurrencyAmount,
+                ValueToday = (decimal)(x.CryptoCurrencyAmount * 68000),
+                ROI = ((decimal)(x.CryptoCurrencyAmount * 68000) - x.InvestmentAmount)
+
+            }).ToList();
+    }
+}

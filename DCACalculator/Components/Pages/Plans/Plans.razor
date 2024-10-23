@@ -1,0 +1,81 @@
+﻿@page "/plans"
+@using System.ComponentModel.DataAnnotations
+@inject CoinMarketCap CoinMarketCap;
+@inject IPlanRepository planRepository;
+
+<PageTitle>Plans</PageTitle>
+
+<MudText Typo="Typo.h3">Plans for investments</MudText>
+
+<MudGrid>
+    <MudItem xs="12" sm="12">
+        <MudPaper Class="pa-4">
+            <MudForm @ref="form" Model="@plan">
+                <MudDatePicker @bind-value="plan.StartDate" DateChanged="@(async value => plan.StartDate = value)" DateFormat="dd/MM/yyyy" Clearable="true"
+                    Label="Start Date" />
+                <MudNumericField @bind-Value="plan.Investment"
+                    For="@(() => plan.Investment)"
+                    Label="Investment"
+                    Min="10"/>
+                <MudSelect @bind-Value="plan.Period"
+                    Label="Period">
+                    @foreach (var period in periods)
+                    {
+                        <MudSelectItem Value="period">@period</MudSelectItem>
+                    }
+                </MudSelect>
+                <MudSelect @bind-Value="plan.CryptoCurrencyName"
+                       Label="Crypto Currency Name">
+                    @foreach (var coin in cryptoCoins)
+                    {
+                        <MudSelectItem Value="coin">@coin</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudForm>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="m-3" OnClick="@SaveAsync">
+                Create Plan
+            </MudButton>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+<MudDataGrid Items="@plans" T="Plan"
+             Hover="true" Bordered="true" Dense="true"
+             SortMode="SortMode.Multiple" Hideable="true" ShowMenuIcon="true" ColumnsPanelReordering="true"
+             Filterable="true" FilterMode="@DataGridFilterMode.ColumnFilterRow" FilterCaseSensitivity="@DataGridFilterCaseSensitivity.CaseInsensitive">
+    <Columns>
+        <PropertyColumn Property="x => x.Id" Hidden="true" />
+        <PropertyColumn Property="x => x.StartDate" Title="Start Date" Format="dd/MM/yyyy"/>
+        <PropertyColumn Property="x => x.Investment" Title="Investment Per Period" Format="0.00"/>
+        <PropertyColumn Property="x => x.Period"/>
+        <PropertyColumn Property="x => x.CryptoCurrencyName" Title="Crypto Currency Name" />
+    </Columns>
+</MudDataGrid>
+
+@code {
+    public string[] periods = { "15th", "20th", "25th"};
+    public string[] cryptoCoins = { "BTC", "ETH", "SOL", "BNB", "TON", "DOT", "SUI", "RENDER" };
+    public MudForm form = new();
+    public List<Plan> plans = new List<Plan>();
+    public Plan plan = new Plan();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        plans = planRepository.GetPlans();
+    }
+
+    public async Task SaveAsync()
+    {
+        await form.Validate();
+
+        if (form.IsValid)
+        {
+            var result = await planRepository.AddPlanAsync(plan);
+            if (result)
+            {
+                plans = planRepository.GetPlans();
+            }
+        }
+    }
+}
